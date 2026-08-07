@@ -1,0 +1,22 @@
+{
+  "projectsRoot": "F:/Proyectos",
+  "controlCenter": "F:/Proyectos/Analista",
+  "outputDirectory": "F:/Proyectos/Analista",
+  "scheduledSemanticMode": "code-only",
+  "manualSemanticMode": "disabled",
+  "graphifyVersionVerified": "0.9.32",
+  "ignoredDirectoryNames": [
+    ".git",
+    "node_modules",
+    "dist",
+    "build",
+    "coverage",
+    ".next",
+    ".nuxt",
+    ".cache",
+    "graphify-out",
+    ".firebase-config",
+    ".playwright-browsers",
+    "Analista"
+  ]
+}

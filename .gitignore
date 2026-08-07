@@ -1,0 +1,38 @@
+# Generated control-center outputs
+graphify-out/
+state/
+*.log
+*.tmp
+*.bak
+*.bak-*
+
+# Secrets and credentials
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.cer
+secrets/
+credentials/
+*-firebase-adminsdk-*.json
+serviceAccountKey.json
+.clasprc.json
+.firebase/
+firebase-debug.log
+
+# Local caches and tooling
+node_modules/
+vendor/
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

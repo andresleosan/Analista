@@ -1,0 +1,36 @@
+{
+  "projectsRoot": "F:/Proyectos",
+  "controlCenter": "F:/Proyectos/Analista",
+  "indexPath": "F:/Proyectos/Analista/INDICE-PROYECTOS.md",
+  "statusPath": "F:/Proyectos/Analista/state/context-status.json",
+  "graphifyOutput": "F:/Proyectos/Analista/graphify-out",
+  "ignoredDirectoryNames": [
+    ".git",
+    "node_modules",
+    "dist",
+    "build",
+    "coverage",
+    ".next",
+    ".nuxt",
+    ".cache",
+    "graphify-out",
+    ".firebase-config",
+    ".playwright-browsers"
+  ],
+  "ignoredFilePatterns": [
+    ".env",
+    ".env.*",
+    "*.pem",
+    "*.key",
+    "*.p12",
+    "*.pfx",
+    "*credentials*",
+    "*secret*"
+  ],
+  "knownDocumentNames": [
+    "BRIEF.md",
+    "STACK.md",
+    "tasks.md",
+    "README.md"
+  ]
+}
