@@ -5,6 +5,7 @@ $scriptPath = Join-Path $PSScriptRoot '..\scripts\actualizar-indice.ps1'
 $fixtureRoot = Join-Path ([System.IO.Path]::GetTempPath()) ('cronos-index-smoke-' + [guid]::NewGuid().ToString('N'))
 $nestedReparsePath = $null
 $reparseTemporaryPath = $null
+$reparseControlCenterPath = $null
 
 function Assert-True {
     param(
@@ -110,14 +111,14 @@ function Invoke-IndexerProcess {
 
     return [pscustomobject]@{
         ExitCode = [int]$LASTEXITCODE
-        Text = [string]::Join("`n", @($output | ForEach-Object {
+        Text = ([string]::Join("`n", @($output | ForEach-Object {
             if ($_ -is [System.Management.Automation.ErrorRecord]) {
                 [string]$_.Exception.Message
             }
             else {
                 [string]$_
             }
-        }))
+        }))) -replace '[\r\n]+\s*', ''
     }
 }
 
@@ -143,7 +144,8 @@ try {
     $pathOnlyControlCenterPath = Join-Path $pathOnlyProjectsRoot 'control-center'
     $pathOnlyOutputPath = Join-Path $pathOnlyControlCenterPath 'INDICE-PROYECTOS.md'
     $pathOnlyStatusPath = Join-Path $pathOnlyControlCenterPath 'state\context-status.json'
-    $unsafeControlCenterPath = 'F:\Proyectos\hachi-greciaspa'
+    $unsafeProjectsDirectory = Split-Path -Parent (Split-Path -Parent $PSScriptRoot)
+    $unsafeControlCenterPath = Join-Path $unsafeProjectsDirectory 'hachi-greciaspa'
     $unsafeOutputPath = Join-Path $unsafeControlCenterPath 'cronos-index-output.md'
     $unsafeStatusPath = Join-Path $unsafeControlCenterPath 'cronos-index-status.json'
     $unsafeProjectsRootFile = Join-Path $fixtureRoot 'unsafe-projects-root.txt'
@@ -191,10 +193,10 @@ try {
     [System.IO.File]::WriteAllText($configPath, ($config | ConvertTo-Json -Depth 4))
 
     $unsafeConfig = [ordered]@{
-        projectsRoot = 'F:/Proyectos'
-        controlCenter = 'F:/Proyectos/Analista'
-        indexPath = 'F:/Proyectos/Analista/INDICE-PROYECTOS.md'
-        statusPath = 'F:/Proyectos/Analista/state/context-status.json'
+        projectsRoot = $unsafeProjectsDirectory
+        controlCenter = (Split-Path -Parent $PSScriptRoot)
+        indexPath = $outputPath
+        statusPath = $statusPath
         ignoredDirectoryNames = $config.ignoredDirectoryNames
         ignoredFilePatterns = $config.ignoredFilePatterns
         knownDocumentNames = $config.knownDocumentNames
@@ -246,7 +248,7 @@ try {
         -StatusPath $unsafeStatusPath
     Assert-True ($unsafeControlCenter.ExitCode -ne 0) 'a real project must not be used as the index control center'
     Assert-True ($unsafeControlCenter.Text -match '(?i)ControlCenterPath') 'the index error should identify the rejected control center'
-    Assert-True ($unsafeControlCenter.Text -match [regex]::Escape($unsafeControlCenterPath)) 'the rejected index control center should appear in the error'
+    Assert-True (($unsafeControlCenter.Text -replace '\s', '') -match [regex]::Escape(($unsafeControlCenterPath -replace '\s', ''))) 'the rejected index control center should appear in the error'
     Assert-True ($unsafeControlCenter.Text -match '(?i)inside the control center') 'the index error should explain the safe output root'
     Assert-True ($unsafeControlCenter.Text -match '(?i)equal the configured control center') 'the index error should explain the configured output root'
     Assert-True (-not (Test-Path -LiteralPath $unsafeOutputPath)) 'the rejected index output must not be created'
@@ -262,7 +264,7 @@ try {
         -OutputPath $unsafeOutputPath `
         -StatusPath $pathOnlyStatusPath
     Assert-True ($unsafeOutput.ExitCode -ne 0) 'OutputPath outside the control center should be rejected'
-    Assert-True (($unsafeOutput.Text -replace '\s', '') -match [regex]::Escape($unsafeOutputPath)) 'the rejected OutputPath should appear in the error'
+    Assert-True (($unsafeOutput.Text -replace '\s', '') -match [regex]::Escape(($unsafeOutputPath -replace '\s', ''))) "the rejected OutputPath should appear in the error: $($unsafeOutput.Text)"
     Assert-True ($unsafeOutput.Text -match '(?i)must remain inside the control center') 'the OutputPath error should explain the safe output root'
 
     $unsafeStatusPath = Join-Path $fixtureRoot 'unsafe-status\context-status.json'
@@ -273,7 +275,7 @@ try {
         -OutputPath $pathOnlyOutputPath `
         -StatusPath $unsafeStatusPath
     Assert-True ($unsafeStatus.ExitCode -ne 0) 'StatusPath outside the control center should be rejected'
-    Assert-True (($unsafeStatus.Text -replace '\s', '') -match [regex]::Escape($unsafeStatusPath)) 'the rejected StatusPath should appear in the error'
+    Assert-True (($unsafeStatus.Text -replace '\s', '') -match [regex]::Escape(($unsafeStatusPath -replace '\s', ''))) 'the rejected StatusPath should appear in the error'
     Assert-True ($unsafeStatus.Text -match '(?i)must remain inside the control center') 'the StatusPath error should explain the safe output root'
 
     Invoke-Indexer -ConfigPath $configPath -ProjectsRoot $projectsRoot -ControlCenterPath $controlCenterPath -OutputPath $outputPath -StatusPath $statusPath | Out-Null

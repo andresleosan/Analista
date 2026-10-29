@@ -1,7 +1,7 @@
 {
-  "projectsRoot": "F:/Proyectos",
-  "controlCenter": "F:/Proyectos/Analista",
-  "outputDirectory": "F:/Proyectos/Analista",
+  "projectsRoot": "E:/Proyectos",
+  "controlCenter": "E:/Proyectos/Analista",
+  "outputDirectory": "E:/Proyectos/Analista",
   "scheduledSemanticMode": "code-only",
   "manualSemanticMode": "disabled",
   "graphifyVersionVerified": "0.9.32",

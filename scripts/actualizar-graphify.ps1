@@ -319,6 +319,7 @@ $statusPath = Join-Path $stateDirectory 'graphify-status.json'
 $graphifyOutPath = Join-Path $controlCenterFullPath 'graphify-out'
 Assert-NoReparsePoint -Path $stateDirectory -Description 'Graphify state directory'
 Assert-NoReparsePoint -Path $statusPath -Description 'Graphify status output'
+Assert-NoReparsePoint -Path "$statusPath.tmp" -Description 'Graphify temporary status output'
 Assert-NoReparsePoint -Path $graphifyOutPath -Description 'Graphify output directory'
 if (Test-Path -LiteralPath $graphifyOutPath -PathType Container) {
     Assert-NoReparsePointsBelow -RootPath $graphifyOutPath -IgnoredDirectoryNames @()

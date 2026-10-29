@@ -1,9 +1,9 @@
 {
-  "projectsRoot": "F:/Proyectos",
-  "controlCenter": "F:/Proyectos/Analista",
-  "indexPath": "F:/Proyectos/Analista/INDICE-PROYECTOS.md",
-  "statusPath": "F:/Proyectos/Analista/state/context-status.json",
-  "graphifyOutput": "F:/Proyectos/Analista/graphify-out",
+  "projectsRoot": "E:/Proyectos",
+  "controlCenter": "E:/Proyectos/Analista",
+  "indexPath": "E:/Proyectos/Analista/INDICE-PROYECTOS.md",
+  "statusPath": "E:/Proyectos/Analista/state/context-status.json",
+  "graphifyOutput": "E:/Proyectos/Analista/graphify-out",
   "ignoredDirectoryNames": [
     ".git",
     "node_modules",

@@ -1,0 +1,24 @@
+# Safe exclusions for Graphify extraction of the workspace.
+Analista/
+graphify-out/
+.codex-audit-*/
+**/.git/
+**/node_modules/
+**/dist/
+**/build/
+**/coverage/
+**/.next/
+**/.nuxt/
+**/.cache/
+**/.firebase-config/
+**/.playwright-browsers/
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+**/*credentials*
+**/*secret*
+**/*serviceAccount*.json
+**/*firebase-adminsdk*.json
